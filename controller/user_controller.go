@@ -8,10 +8,10 @@ import (
 	"github.com/thimi0412/gin-practice/entity"
 )
 
-// Controller ユーザコントローラー
+// UserController ユーザコントローラー
 type UserController struct{}
 
-// Create action: POST /users
+// Create action: POST /user
 func (uc UserController) Create(c *gin.Context) {
 	conn := db.DBConnect()
 	defer conn.Close()
