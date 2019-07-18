@@ -1,7 +1,7 @@
 package controller
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/gin-gonic/gin"
 	"github.com/thimi0412/gin-practice/db"
@@ -24,8 +24,10 @@ func (uc UserController) Create(c *gin.Context) {
 	user.Password = passoword
 
 	if err := conn.Create(&user).Error; err != nil {
-		c.AbortWithStatus(400)
-		fmt.Println(err)
+		log.Println(err)
+		c.JSON(400, gin.H{
+			"message": err.Error,
+		})
 	} else {
 		c.JSON(201, user)
 	}
