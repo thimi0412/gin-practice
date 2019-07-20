@@ -25,9 +25,7 @@ func (uc UserController) Create(c *gin.Context) {
 
 	if err := conn.Create(&user).Error; err != nil {
 		log.Println(err)
-		c.JSON(400, gin.H{
-			"message": err.Error,
-		})
+		c.JSON(400, err)
 	} else {
 		c.JSON(201, user)
 	}
