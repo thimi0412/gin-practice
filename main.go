@@ -11,5 +11,6 @@ func main() {
 	r.GET("/ping", ctrl.GetSampleUser)
 	r.GET("/test", ctrl.GetTest)
 	r.POST("/user", ctrl.Create)
+	r.POST("/login", ctrl.Login)
 	r.Run()
 }

@@ -37,6 +37,7 @@ func (uc UserController) Create(c *gin.Context) {
 	}
 }
 
+// Login action POST /login
 func (uc UserController) Login(c *gin.Context) {
 	conn := db.DBConnect()
 	defer conn.Close()
