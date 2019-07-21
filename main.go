@@ -9,6 +9,7 @@ func main() {
 	r := gin.Default()
 	ctrl := controller.UserController{}
 	r.GET("/ping", ctrl.GetSampleUser)
+	r.GET("/test", ctrl.GetTest)
 	r.POST("/user", ctrl.Create)
 	r.Run()
 }

@@ -46,3 +46,8 @@ func (uc UserController) GetSampleUser(c *gin.Context) {
 
 	c.JSON(201, user)
 }
+
+// GetTest action GET /test
+func (uc UserController) GetTest(c *gin.Context) {
+	c.JSON(200, gin.H{"test": "testやで"})
+}
