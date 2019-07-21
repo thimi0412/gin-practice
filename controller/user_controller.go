@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/thimi0412/gin-practice/authentication"
 	"github.com/thimi0412/gin-practice/db"
 	"github.com/thimi0412/gin-practice/entity"
 )
@@ -17,11 +18,16 @@ func (uc UserController) Create(c *gin.Context) {
 	defer conn.Close()
 
 	email := c.PostForm("email")
-	passoword := c.PostForm("password")
+	password := c.PostForm("password")
+
+	hashPw, err := authentication.PasswordHash(password)
+	if err != nil {
+		c.JSON(400, err)
+	}
 
 	user := entity.User{}
 	user.Email = email
-	user.Password = passoword
+	user.Password = hashPw
 
 	if err := conn.Create(&user).Error; err != nil {
 		log.Println(err)
