@@ -58,7 +58,13 @@ func (uc UserController) Login(c *gin.Context) {
 		log.Println(err)
 		c.JSON(400, err)
 	}
-	c.JSON(200, user)
+	jwt, err := authentication.CreateTokenString(user)
+	if err != nil {
+		c.JSON(400, err)
+	}
+	c.JSON(200, gin.H{
+		"jwt": jwt,
+	})
 }
 
 // GetSampleUser action: GET /user
