@@ -37,6 +37,29 @@ func (uc UserController) Create(c *gin.Context) {
 	}
 }
 
+func (uc UserController) Login(c *gin.Context) {
+	conn := db.DBConnect()
+	defer conn.Close()
+
+	email := c.PostForm("email")
+	password := c.PostForm("password")
+
+	user := entity.User{}
+	user.Email = email
+
+	if err := conn.First(&user).Error; err != nil {
+		log.Println(err)
+		c.JSON(400, err)
+	}
+
+	err := authentication.PasswordVerify(user.Password, password)
+	if err != nil {
+		log.Println(err)
+		c.JSON(400, err)
+	}
+	c.JSON(200, user)
+}
+
 // GetSampleUser action: GET /user
 func (uc UserController) GetSampleUser(c *gin.Context) {
 	user := entity.User{}
