@@ -75,6 +75,7 @@ func existUser(email, password string) error {
 	if err := authentication.PasswordVerify(user.Password, password); err != nil {
 		return err
 	}
+	log.Println("aaaaaaa")
 	return nil
 }
 
