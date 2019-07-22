@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"errors"
 	"log"
 
 	"github.com/gin-gonic/gin"
@@ -69,7 +70,7 @@ func existUser(email, password string) error {
 	user := entity.User{}
 
 	if err := conn.Where("email = ?", email).First(&user).Error; gorm.IsRecordNotFoundError(err) {
-		return err
+		return errors.New("Record is not found")
 	}
 	if err := authentication.PasswordVerify(user.Password, password); err != nil {
 		return err
