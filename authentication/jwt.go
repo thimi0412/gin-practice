@@ -1,8 +1,6 @@
 package authentication
 
 import (
-	"log"
-
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/thimi0412/gin-practice/db"
 	"github.com/thimi0412/gin-practice/entity"
@@ -40,10 +38,7 @@ func AuthTokenString(tokenString string) error {
 	}
 	claims := token.Claims.(jwt.MapClaims)
 
-	log.Println(claims["email"])
-	log.Println(claims["password"])
-
-	claimsEmail := claims["email"].(string)
+	claimsEmail := claims["e_mail"].(string)
 	claimsPassword := claims["password"].(string)
 
 	conn := db.DBConnect()
