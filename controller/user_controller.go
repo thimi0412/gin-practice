@@ -47,19 +47,13 @@ func (uc UserController) Login(c *gin.Context) {
 	password := c.PostForm("password")
 
 	user := entity.User{}
-	user.Email = email
 
-	if err := conn.First(&user).Error; gorm.IsRecordNotFoundError(err) {
-		log.Println(err)
-		log.Println(user.ID)
-		log.Println(user.Email)
-		log.Println(user.Password)
+	if err := conn.Where("email = ? AND password = ?", email, password).First(&user).Error; gorm.IsRecordNotFoundError(err) {
 		c.JSON(400, err)
 		return
 	}
 
-	err := authentication.PasswordVerify(user.Password, password)
-	if err != nil {
+	if err := authentication.PasswordVerify(user.Password, password); err != nil {
 		log.Println(err)
 		c.JSON(400, err)
 		return
