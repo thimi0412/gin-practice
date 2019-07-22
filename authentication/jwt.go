@@ -40,11 +40,11 @@ func AuthTokenString(tokenString string) error {
 	}
 	claims := token.Claims.(jwt.MapClaims)
 
+	log.Println(claims["email"])
+	log.Println(claims["password"])
+
 	claimsEmail := claims["email"].(string)
 	claimsPassword := claims["password"].(string)
-
-	log.Println(claimsEmail)
-	log.Println(claimsPassword)
 
 	conn := db.DBConnect()
 	defer conn.Close()
