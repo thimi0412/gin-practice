@@ -52,14 +52,14 @@ func (uc UserController) Login(c *gin.Context) {
 	if err := existUser(email, password); err != nil {
 		log.Println(err)
 		c.JSON(400, gin.H{
-			"error": err,
+			"error": err.Error(),
 		})
 	} else {
 		jwt, err := authentication.CreateTokenString(user)
 		if err != nil {
 			log.Println(err)
 			c.JSON(400, gin.H{
-				"error": err,
+				"error": err.Error(),
 			})
 		} else {
 			c.JSON(200, gin.H{
