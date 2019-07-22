@@ -51,19 +51,19 @@ func (uc UserController) Login(c *gin.Context) {
 	if err := conn.First(&user).Error; err != nil {
 		log.Println(err)
 		c.JSON(400, err)
-		c.Abort()
+		return
 	}
 
 	err := authentication.PasswordVerify(user.Password, password)
 	if err != nil {
 		log.Println(err)
 		c.JSON(400, err)
-		c.Abort()
+		return
 	}
 	jwt, err := authentication.CreateTokenString(user)
 	if err != nil {
 		c.JSON(400, err)
-		c.Abort()
+		return
 	}
 	c.JSON(200, gin.H{
 		"jwt": jwt,
