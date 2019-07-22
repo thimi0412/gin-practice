@@ -30,23 +30,20 @@ func CreateTokenString(user entity.User) (string, error) {
 
 // AuthTokenString jwtからユーザー情報を取得する
 func AuthTokenString(tokenString string) error {
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+
+	jwtToken := JWTToken{}
+	_, err := jwt.ParseWithClaims(tokenString, &jwtToken, func(token *jwt.Token) (interface{}, error) {
 		return []byte("foobar"), nil
 	})
 	if err != nil {
 		return err
 	}
-	claims := token.Claims.(jwt.MapClaims)
-
-	claimsEmail := claims["e_mail"].(string)
-	claimsPassword := claims["password"].(string)
 
 	conn := db.DBConnect()
 	defer conn.Close()
 
 	user := entity.User{}
-	user.Email = claimsEmail
-	user.Password = claimsPassword
+	user.ID = jwtToken.UserID
 
 	if err := conn.First(&user).Error; err != nil {
 		return err
