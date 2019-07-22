@@ -28,7 +28,7 @@ func CreateTokenString(user entity.User) (string, error) {
 	return tokenString, nil
 }
 
-// AuthTokenString jwtが正しいかチェックする
+// AuthTokenString jwtからユーザー情報を取得する
 func AuthTokenString(tokenString string) error {
 	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 		return []byte("foobar"), nil
