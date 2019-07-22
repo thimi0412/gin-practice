@@ -4,6 +4,7 @@ import (
 	"log"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jinzhu/gorm"
 	"github.com/thimi0412/gin-practice/authentication"
 	"github.com/thimi0412/gin-practice/db"
 	"github.com/thimi0412/gin-practice/entity"
@@ -48,7 +49,7 @@ func (uc UserController) Login(c *gin.Context) {
 	user := entity.User{}
 	user.Email = email
 
-	if err := conn.First(&user).Error; err != nil {
+	if err := conn.First(&user).Error; gorm.IsRecordNotFoundError(err) {
 		log.Println(err)
 		c.JSON(400, err)
 		return
