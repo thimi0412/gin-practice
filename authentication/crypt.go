@@ -1,11 +1,16 @@
 package authentication
 
-import "golang.org/x/crypto/bcrypt"
+import (
+	"log"
+
+	"golang.org/x/crypto/bcrypt"
+)
 
 // PasswordHash パスワード暗号化する
 func PasswordHash(pw string) (string, error) {
 	hash, err := bcrypt.GenerateFromPassword([]byte(pw), bcrypt.DefaultCost)
 	if err != nil {
+		log.Println(err)
 		return "", err
 	}
 	return string(hash), err
