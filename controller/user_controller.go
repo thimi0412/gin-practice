@@ -50,12 +50,14 @@ func (uc UserController) Login(c *gin.Context) {
 	user := entity.User{}
 
 	if err := existUser(email, password); err != nil {
+		log.Println(err)
 		c.JSON(400, gin.H{
 			"error": err,
 		})
 	} else {
 		jwt, err := authentication.CreateTokenString(user)
 		if err != nil {
+			log.Println(err)
 			c.JSON(400, gin.H{
 				"error": err,
 			})
