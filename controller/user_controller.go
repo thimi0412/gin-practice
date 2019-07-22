@@ -78,7 +78,7 @@ func existUser(email, password string) error {
 		return errors.New("Record is not found")
 	}
 	if err := authentication.PasswordVerify(user.Password, password); err != nil {
-		log.Println("aaaaaa")
+		log.Println("bbb")
 		return err
 	}
 	return nil
