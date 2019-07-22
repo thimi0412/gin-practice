@@ -48,24 +48,33 @@ func (uc UserController) Login(c *gin.Context) {
 
 	user := entity.User{}
 
-	if err := conn.Where("email = ? AND password = ?", email, password).First(&user).Error; gorm.IsRecordNotFoundError(err) {
+	if err := existUser(email, password); err != nil {
 		c.JSON(400, err)
-		return
+	} else {
+		jwt, err := authentication.CreateTokenString(user)
+		if err != nil {
+			c.JSON(400, err)
+		} else {
+			c.JSON(200, gin.H{
+				"jwt": jwt,
+			})
+		}
 	}
+}
 
+func existUser(email, password string) error {
+	conn := db.DBConnect()
+	defer conn.Close()
+
+	user := entity.User{}
+
+	if err := conn.Where("email = ? AND", email, password).First(&user).Error; gorm.IsRecordNotFoundError(err) {
+		return err
+	}
 	if err := authentication.PasswordVerify(user.Password, password); err != nil {
-		log.Println(err)
-		c.JSON(400, err)
-		return
+		return err
 	}
-	jwt, err := authentication.CreateTokenString(user)
-	if err != nil {
-		c.JSON(400, err)
-		return
-	}
-	c.JSON(200, gin.H{
-		"jwt": jwt,
-	})
+	return nil
 }
 
 // GetSampleUser action: GET /user
