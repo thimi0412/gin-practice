@@ -99,7 +99,7 @@ func (uc UserController) GetTest(c *gin.Context) {
 	token := c.PostForm("token")
 	if user, err := authentication.AuthTokenString(token); err != nil {
 		c.JSON(400, gin.H{
-			"message": err,
+			"message": err.Error(),
 		})
 	} else {
 		c.JSON(200, gin.H{
