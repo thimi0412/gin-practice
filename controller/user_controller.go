@@ -68,7 +68,7 @@ func existUser(email, password string) error {
 
 	user := entity.User{}
 
-	if err := conn.Where("email = ?", email, password).First(&user).Error; gorm.IsRecordNotFoundError(err) {
+	if err := conn.Where("email = ?", email).First(&user).Error; gorm.IsRecordNotFoundError(err) {
 		return err
 	}
 	if err := authentication.PasswordVerify(user.Password, password); err != nil {
