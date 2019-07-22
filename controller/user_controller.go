@@ -51,6 +51,9 @@ func (uc UserController) Login(c *gin.Context) {
 
 	if err := conn.First(&user).Error; gorm.IsRecordNotFoundError(err) {
 		log.Println(err)
+		log.Println(user.ID)
+		log.Println(user.Email)
+		log.Println(user.Password)
 		c.JSON(400, err)
 		return
 	}
