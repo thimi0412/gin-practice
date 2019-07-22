@@ -97,11 +97,14 @@ func (uc UserController) GetSampleUser(c *gin.Context) {
 // GetTest action GET /test
 func (uc UserController) GetTest(c *gin.Context) {
 	token := c.PostForm("token")
-	if err := authentication.AuthTokenString(token); err != nil {
-		c.JSON(400, err.Error())
+	if user, err := authentication.AuthTokenString(token); err != nil {
+		c.JSON(400, gin.H{
+			"message": err,
+		})
 	} else {
 		c.JSON(200, gin.H{
 			"message": "success!",
+			"user":    user,
 		})
 	}
 }
