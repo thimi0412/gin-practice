@@ -76,12 +76,10 @@ func existUser(email, password string) error {
 	user := entity.User{}
 
 	if err := conn.Where("email = ?", email).First(&user).Error; gorm.IsRecordNotFoundError(err) {
-		log.Println("aaaaaa")
-		return errors.New("Record is not found")
+		return errors.New("No User")
 	}
 	if err := authentication.PasswordVerify(user.Password, password); err != nil {
-		log.Println("bbb")
-		return errors.New("Record is not found")
+		return errors.New("Password does not match")
 	}
 	return nil
 }
