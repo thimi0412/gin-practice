@@ -84,16 +84,6 @@ func existUser(email, password string) error {
 	return nil
 }
 
-// GetSampleUser action: GET /user
-func (uc UserController) GetSampleUser(c *gin.Context) {
-	user := entity.User{}
-	user.ID = 1
-	user.Email = "kosuke@hogehoge.com"
-	user.Password = "hogehuga"
-
-	c.JSON(201, user)
-}
-
 // GetTest action GET /test
 func (uc UserController) GetTest(c *gin.Context) {
 	token := c.PostForm("token")

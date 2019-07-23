@@ -8,7 +8,6 @@ import (
 func main() {
 	r := gin.Default()
 	ctrl := controller.UserController{}
-	r.GET("/ping", ctrl.GetSampleUser)
 	r.POST("/test", ctrl.GetTest)
 	r.POST("/user", ctrl.Create)
 	r.POST("/login", ctrl.Login)
