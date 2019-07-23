@@ -84,8 +84,8 @@ func existUser(email, password string) error {
 	return nil
 }
 
-// GetTest action GET /test
-func (uc UserController) GetTest(c *gin.Context) {
+// JWTTest action post /test
+func (uc UserController) JWTTest(c *gin.Context) {
 	token := c.PostForm("token")
 	if user, err := authentication.AuthTokenString(token); err != nil {
 		c.JSON(400, gin.H{
