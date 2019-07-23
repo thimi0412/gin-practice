@@ -14,8 +14,8 @@ import (
 // UserController ユーザコントローラー
 type UserController struct{}
 
-// Create action: POST /user
-func (uc UserController) Create(c *gin.Context) {
+// Signup action: POST /signup
+func (uc UserController) Signup(c *gin.Context) {
 	conn := db.DBConnect()
 	defer conn.Close()
 
@@ -39,8 +39,8 @@ func (uc UserController) Create(c *gin.Context) {
 	}
 }
 
-// Login action POST /login
-func (uc UserController) Login(c *gin.Context) {
+// Signin action POST /signin
+func (uc UserController) Signin(c *gin.Context) {
 	conn := db.DBConnect()
 	defer conn.Close()
 

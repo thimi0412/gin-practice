@@ -9,7 +9,7 @@ func main() {
 	r := gin.Default()
 	ctrl := controller.UserController{}
 	r.POST("/test", ctrl.GetTest)
-	r.POST("/user", ctrl.Create)
-	r.POST("/login", ctrl.Login)
+	r.POST("/user", ctrl.Signup)
+	r.POST("/login", ctrl.Signin)
 	r.Run()
 }
