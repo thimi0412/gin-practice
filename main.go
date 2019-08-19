@@ -7,9 +7,9 @@ import (
 
 func main() {
 	r := gin.Default()
-	ctrl := controller.UserController{}
-	r.POST("/test", ctrl.JWTTest)
-	r.POST("/signup", ctrl.Signup)
-	r.POST("/signin", ctrl.Signin)
+	userController := controller.UserController{}
+	r.POST("/test", userController.JWTTest)
+	r.POST("/signup", userController.Signup)
+	r.POST("/signin", userController.Signin)
 	r.Run()
 }
